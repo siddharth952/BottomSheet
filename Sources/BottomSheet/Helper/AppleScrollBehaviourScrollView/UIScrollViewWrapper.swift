@@ -288,6 +288,7 @@ internal class UIScrollViewViewController<Content: View>: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceVertical = true
         scrollView.backgroundColor = .clear
+        scrollView.showsVerticalScrollIndicator = false
         self.scrollView = scrollView
         
         // Create the UIHostingController
