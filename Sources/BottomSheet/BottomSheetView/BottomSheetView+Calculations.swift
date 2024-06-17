@@ -25,32 +25,9 @@ internal extension BottomSheetView {
 #endif
     }
     
-    var isIPadOrMac: Bool {
-        return self.isIPad || self.isMac
-    }
-    
-    var isIPadFloating: Bool {
-        return self.isIPad && self.configuration.iPadFloatingSheet
-    }
-    
-    var isIPadFloatingOrMac: Bool {
-        return self.isIPadFloating || self.isMac
-    }
-    
-    var isIPadBottom: Bool {
-        return self.isIPad && !self.configuration.iPadFloatingSheet
-    }
     
     var topPadding: CGFloat {
-        if self.isIPadFloatingOrMac {
-#if os(macOS)
-            return NSApplication.shared.mainMenu?.menuBarHeight ?? 20
-#else
-            return UIApplication.shared.windows.first?.safeAreaInsets.top ?? 10
-#endif
-        } else {
             return 0
-        }
     }
     
     // Whether the header is a title
@@ -73,7 +50,7 @@ internal extension BottomSheetView {
     // The height of the safe area when position is bottom
     var bottomPositionSafeAreaHeight: CGFloat {
         // Only add safe area when `dynamicBottom` and not on iPad floating or Mac
-        if self.bottomSheetPosition == .dynamicBottom && !self.isIPadFloatingOrMac {
+        if self.bottomSheetPosition == .dynamicBottom {
 #if !os(macOS)
             // Safe area as height (iPhone)
             return UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 20
@@ -98,7 +75,7 @@ internal extension BottomSheetView {
     // The maximum height of the BottomSheet
     func maxBottomSheetHeight(with geometry: GeometryProxy) -> CGFloat {
         // Screen height without safe areas and padding
-        return geometry.size.height - (self.isIPadFloatingOrMac ? 20 : 0) - self.topPadding
+        return geometry.size.height - self.topPadding
     }
     
     // The current height of the BottomSheet (without translation)
